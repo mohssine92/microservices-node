@@ -1,5 +1,5 @@
 
-// creacion de err personalizado 
+// creacion de err personalizado -instanciar objeto de err de js y rellenarlo 
 function err(message, code) {
     let e = new Error(message);
 

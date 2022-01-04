@@ -1,6 +1,7 @@
 
 // va ser la db que queremos setear a nuestro controlador
-const store = require('../../../store/dummy');
+// const store = require('../../../store/dummy');  --db  false
+const store = require('../../../store/mysql');
 const ctrl = require('./controller');
 
 // ctrl : es objeto --> strl() : convertido en una funcion  / asi archivo de controller debe exportar funcion  - le injectamos lo que queremos injectar en este caso sera store

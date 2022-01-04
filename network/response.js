@@ -1,7 +1,7 @@
 // lo que nos interesa tener todas respuestas desde el mismo archivo 
 
 
-// exportar dos funciones success y error
+// exportar dos funciones success y error - formatear la respuesta en json 
 
 exports.success = function (req, res, message, status) {
     let statusCode = status || 200;

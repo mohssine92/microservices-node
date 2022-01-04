@@ -11,6 +11,7 @@ module.exports = function checkAuth(action) {
             case 'update':
                 // id del usuario que quiere modificar - comprobar si el usuario quien genero el tokene es el que quiere modificar 
                 const owner = req.body.id;
+  
                 auth.check.own(req, owner);
                 next();
                 break;

@@ -7,6 +7,7 @@ function errors(err, req, res, next) {
     const message = err.message || 'Error interno';
     const status = err.statusCode || 500;
 
+    // simplemente una funcion para dar forma a respuesta de al api 
     response.error(req, res, message, status);
 
 }
@@ -26,3 +27,4 @@ module.exports = errors;
 // gestionar Todos  los errores del mismo archivo 
 // no es buen idea que se ve path de nuestro err - lo puede aprovechar un atacante .
 // asi en la consola podemos ver toda la informacion sobre el errr pero modificamos output en la red del err occultamos mas detalles - no dejar oportunidad al hacker obtener mas info sobre systema de path 
+// esta funcion se ejecuta en mdlr de express .asi recibe err, req, res , next 

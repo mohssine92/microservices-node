@@ -10,19 +10,22 @@ const user = require('./components/user/network');
 const auth = require('./components/auth/network');
 const errors = require('../network/errors');
 
+
 const app = express();
+
+//------------------Mdlrs de expres---------------------------
 
 app.use(bodyParser.json());
 
-// ROUER
+// ROUTERS
 app.use('/api/user', user);
 app.use('/api/auth', auth );
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDoc));
 
+// Manejador de errores
 app.use(errors);
 
-
-
+//---------------------Mdlrs de expres ---------------------------
 
 
 app.listen(config.api.port, () => {

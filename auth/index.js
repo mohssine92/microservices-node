@@ -6,6 +6,7 @@ const error = require('../utils/error');
 const secret = config.jwt.secret;
 
 function sign(data) {
+   
     // funcion para firmar JWT
     return jwt.sign(data, secret );
 }
@@ -18,9 +19,10 @@ function verify(token) {
 const check = {
     own: function(req, owner) {
         const decoded = decodeHeader(req);
-        console.log(decoded);
+       
         //owner es id del objeto user impacta actualizacion - decode.id es id viajado en token de autenticacion - con fin cada autenticacion modifica su objeto nada mas  en este caso 
         if (decoded.id !== owner) {
+           
             throw error('No puedes hacer esto', 401);
         }
     },
@@ -28,12 +30,12 @@ const check = {
 
 function getToken(auth) {
     if (!auth) {
-        throw new Error('No viene token');
+        throw error('No viene token', 401);
     }
-
+    
     // es decir tal string no lo ha encontrado  en la cadena returna -1 
     if (auth.indexOf('Bearer ') === -1) {
-        throw new Error('Formato invalido');
+        throw error('Formato invalido', 401);
     }
 
     // devolver token en plano
@@ -44,6 +46,7 @@ function getToken(auth) {
 // funcion para decodificar el token
 function decodeHeader(req) {
     const authorization = req.headers.authorization || '';
+   
     // tener token plano
     const token = getToken(authorization);
     // verificar la firma del token - si exita lo decodifica a objeto

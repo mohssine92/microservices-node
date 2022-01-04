@@ -8,32 +8,36 @@ module.exports = function (injectedStore) {
     // comprobar el stor que tiene que ser en caso que no usamos el store que queramos - ventajas de trabajar archivo db como injeccion del controller
     let store = injectedStore;
     if (!store) {
-        store = require('../../../store/dummy');
+        store = require('../../../store/mysql');
     }
 
     async function login(username, password) { 
+        
         const data = await store.query(TABLA, { username: username });
        
         // recibe pass plano lo compara con pass cryptado por funcion hash de la misma libreria  - video 10 
         return bcrypt.compare(password, data.password)
         .then(sonIguales => {
             if (sonIguales === true) {
-                // Generar token;
-                return auth.sign(data)
+                // Generar token; - no es recomendable mandar objeto de data completo - desesctructure y manda en token solo la data necesaria
+                return auth.sign({...data})
             } else {
+                // puede sustituir con la funcion err de utils/error.js
                 throw new Error('Informacion invalida');
             }
         });
 
     }
 
-
     // para hacer cualquier insertacion  o actualizacion de ususario 
     async function upsert(data) {
         // eso nos va permitir trabaja de forma separada y crear solamente los campos que necesitams paraque cuando nuestra tabla esta en actualizacion actualiza solamente lo que necesita 
         const authData = {
+            // es id generado nanoid para el mismo registro 
             id: data.id,
         }
+
+        console.log(data);
 
         // mira si hay username y lo actualiza ..
         if (data.username) {
@@ -52,6 +56,8 @@ module.exports = function (injectedStore) {
         login,
         upsert,
     };
+
+    
 };
 
 

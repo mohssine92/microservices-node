@@ -10,7 +10,7 @@ module.exports = function (injectedStore) {
 
     let store = injectedStore;
     if (!store) {
-        store = require('../../../store/dummy');
+        store = require('../../../store/mysql');
     }
 
     function list() {
@@ -22,6 +22,7 @@ module.exports = function (injectedStore) {
     }
 
     async function upsert(body) {
+       
         const user = {
             name: body.name,
             username: body.username
@@ -34,15 +35,17 @@ module.exports = function (injectedStore) {
             user.id = nanoid();
         }
 
+
+
         // si viene estos props campos los actualizamos
         if (body.password || body.username) {
+           
             await auth.upsert({
                 id: user.id,
                 username: user.username,
                 password: body.password,
             })
         }
-
 
         return store.upsert(TABLA, user);
     }
