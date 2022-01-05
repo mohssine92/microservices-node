@@ -16,6 +16,13 @@ module.exports = function checkAuth(action) {
                 next();
                 break;
 
+            case 'follow':
+                // en este caso solo verifica si el token esta correcto - autenticacion correcta + extrae informacion del token y lo manda dentro de user prop del object req
+                auth.check.logged(req);
+                next();
+                break;
+        
+
             default:
                 next();
         }

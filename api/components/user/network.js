@@ -12,6 +12,8 @@ const router = express.Router();
 
 // Routes
 router.get('/', list)
+router.post('/follow/:id', secure('follow'),follow);
+router.get('/:id/following', following);
 router.get('/:id', get);
 router.post('/', upsert);
 router.put('/', secure('update'), upsert);
@@ -45,6 +47,25 @@ function upsert(req, res, next) {
             response.success(req, res, user, 201);
         })
         .catch(next);
+}
+
+function follow(req, res, next) {
+    // req.user.id - user es objeto rellenado en el proceso del token - obteniendo informacion del user autenticado el que quiere seguir  en este caso 
+    // req.params.id el usuario que queremos seguir
+    Controller.follow(req.user.id, req.params.id)
+        .then(data => {
+            response.success(req, res, data, 201);
+        })
+        .catch(next);
+}
+
+function following(req, res, next) {
+    //traer los usuarios que sigua un usuario dado 
+	return Controller.following(req.params.id)
+		.then( (data) => {
+			return response.success(req, res, data, 200);
+		})
+		.catch(next);
 }
 
 

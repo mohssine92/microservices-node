@@ -86,8 +86,11 @@ function update(table, data) {
 
 async function upsert(table, data) {
       
-    // verificar si existe registro con tal id -
-    const row = await get(table, data.id);
+    // verificar si existe registro con tal id - si viene id en caso de follow no no tenemos id en la tabla
+    let row = []
+    if(data.id){
+        row = await get(table, data.id)
+    }
 
   
     if (row.length === 0 ) {
@@ -96,12 +99,18 @@ async function upsert(table, data) {
        return update(table, data);
     }
 }
+function query(table, query, join) { // tabla principal donde se hace la busqueda 
+    let joinQuery = '';
+    if (join) {
+        const key = Object.keys(join)[0]; // tabla
+        const val = join[key]; // campo relacion 
+        joinQuery = `JOIN ${key} ON ${table}.${val} = ${key}.id`;
+    }
 
-function query(table, query) { // query es {username : username } etc ... - la llave de la busqueda       
-     return new Promise((resolve, reject) => {
-        connection.query(`SELECT * FROM ${table} WHERE ?`, query, (err, res) => {
+    return new Promise((resolve, reject) => {
+        connection.query(`SELECT * FROM ${table} ${joinQuery} WHERE ${table}.?`, query, (err, res) => {
             if (err) return reject(err);
-            resolve(res[0] || null);
+            resolve(res|| null);
         })
     })
 }

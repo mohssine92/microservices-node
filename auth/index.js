@@ -26,6 +26,10 @@ const check = {
             throw error('No puedes hacer esto', 401);
         }
     },
+    logged: function(req) { 
+        // extraer la data del token en objeto - informacion del user autenticado el que quiere seguir 
+        const decoded = decodeHeader(req);
+    },
 }
 
 function getToken(auth) {
@@ -52,6 +56,7 @@ function decodeHeader(req) {
     // verificar la firma del token - si exita lo decodifica a objeto
     const decoded = verify(token);
 
+    // con fin de extraer data del user autenticado en el controller como es caso del user el que quieres seguir
     req.user = decoded;
 
     return decoded;
