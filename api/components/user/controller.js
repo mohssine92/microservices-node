@@ -65,8 +65,12 @@ module.exports = function (injectedStore) {
         const join = {}
         join[TABLA] = 'user_to'; // { user: 'user_to' } tabla : campo relacion 
         const query = { user_from: user }; // query es campo en que se basa la busqueda en la tabla principal
-		
-		return await store.query(TABLA + '_follow', query, join);
+
+        // console.log(join);
+        // console.log(TABLA);
+        // console.log(query);
+       
+		return await store.join(TABLA + '_follow', query, join);
 	}
 
 

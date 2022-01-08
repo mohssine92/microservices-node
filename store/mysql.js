@@ -111,8 +111,10 @@ function query(table, query, join) { // tabla principal donde se hace la busqued
         const key = Object.keys(join)[0]; // tabla
         const val = join[key]; // campo relacion 
         joinQuery = `JOIN ${key} ON ${table}.${val} = ${key}.id`;
+       
     }
 
+    
     return new Promise((resolve, reject) => {
         connection.query(`SELECT * FROM ${table} ${joinQuery} WHERE ${table}.?`, query, (err, res) => {
             if (err) return reject(err);

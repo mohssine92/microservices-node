@@ -124,6 +124,7 @@ function createRemoteDB(host, port) {
             'user_to':  `${data.user_to}`
 
           }
+        
 
         });
 
@@ -178,6 +179,35 @@ function createRemoteDB(host, port) {
 
     }
 
+    async function join (tabla, query , join) {
+    //    console.log(tabla);
+    //    console.log(query);
+    //    console.log(join);
+           
+       let url = URL + '/following';
+       const apiToken = config.apiToken;
+
+
+       const body = {} 
+       body.table = tabla
+       body.query = query;
+       body.join = join;
+
+       try {
+
+        if( body instanceof Object ){
+            const res = await axios.post(url, body ,{headers: {'apiToken': `${apiToken}`}}); //apiToken
+            //console.log('[respuesta]', res.data.body);
+            return res.data.body;
+        }
+         
+      } catch (err) {
+       
+         throw error('Error en la Peticion hacia API de db Mysql', 400);
+         
+      }
+
+    }
 
 
     return {
@@ -186,7 +216,7 @@ function createRemoteDB(host, port) {
         upsert,
         query,
         follow,
-        //reqCompuesta
+        join
     }
 }
 
