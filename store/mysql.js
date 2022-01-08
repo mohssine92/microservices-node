@@ -1,5 +1,5 @@
 const mysql = require('mysql');
-
+const chalk = require('chalk')
 const config = require('../config');
 
 const dbconf = {
@@ -67,6 +67,9 @@ function get(table, id) {
 }
 
 function insert(table, data) {
+  
+    console.log(`${chalk.bgCyan('[store/mysql.js-71]')}`,table, data);
+
     return new Promise((resolve, reject) => {
         connection.query(`INSERT INTO ${table} SET ?`, data, (err, result) => {
             if (err) return reject(err);
@@ -76,6 +79,7 @@ function insert(table, data) {
 }
 
 function update(table, data) {
+    
     return new Promise((resolve, reject) => {
         connection.query(`UPDATE ${table} SET ? WHERE id=?`, [data, data.id], (err, result) => {
             if (err) return reject(err);
@@ -85,18 +89,20 @@ function update(table, data) {
 }
 
 async function upsert(table, data) {
+    
       
     // verificar si existe registro con tal id - si viene id en caso de follow no no tenemos id en la tabla
     let row = []
     if(data.id){
-        row = await get(table, data.id)
+        row = await get(table, data.id)  // ok
+       
     }
 
   
     if (row.length === 0 ) {
-        return insert(table, data);   
-    } else {
-       return update(table, data);
+        return insert(table, data);      
+    } else { 
+       return update(table, data); // ok
     }
 }
 function query(table, query, join) { // tabla principal donde se hace la busqueda 
@@ -115,11 +121,31 @@ function query(table, query, join) { // tabla principal donde se hace la busqued
     })
 }
 
+function queryAND(data){
+
+    const table = data.tabla;
+    const key1 = Object.keys(data)[1]; 
+    const value1 = data[key1]
+    const key2 = Object.keys(data)[2]; 
+    const value2 = data[key2]    
+    
+ 
+    return new Promise((resolve, reject) => {
+        connection.query(`SELECT * FROM ${table} WHERE ${key1}='${value1}' AND ${key2}='${value2}'`, (err, res) => {
+            if (err) return reject(err);
+            resolve(res|| null);
+        })
+    })
+
+}
+
 module.exports = {
     list,
     get,
     upsert,
-    query
+    insert,
+    query,
+    queryAND
 };
 
 

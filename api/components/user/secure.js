@@ -1,6 +1,6 @@
 // traer auth global 
 const auth = require('../../../auth');
-
+const error = require('../../../utils/error');
 
 // exportar una funcion que genera mdlr
 module.exports = function checkAuth(action) {
@@ -8,9 +8,16 @@ module.exports = function checkAuth(action) {
     // Un mdlr de expres que tiene simplemente req, res , next
     function middleware(req, res, next) {
         switch(action) { // dinamica segun la accion que queremos ejecutar 
-            case 'update':
+            case 'token':
                 // id del usuario que quiere modificar - comprobar si el usuario quien genero el tokene es el que quiere modificar 
                 const owner = req.body.id;
+
+                if(owner === undefined){
+                   //TODO: mientras veremos curso de node para proteger campos - validacion de campos 
+                    throw error('id is required', 400);
+                }
+
+              
   
                 auth.check.own(req, owner);
                 next();

@@ -1,4 +1,5 @@
 const bcrypt = require('bcrypt');
+const error = require('../../../utils/error');
 
 const auth = require('../../../auth');
 const TABLA = 'auth';
@@ -8,22 +9,24 @@ module.exports = function (injectedStore) {
     // comprobar el stor que tiene que ser en caso que no usamos el store que queramos - ventajas de trabajar archivo db como injeccion del controller
     let store = injectedStore;
     if (!store) {
-        store = require('../../../store/mysql');
+        store = require('../../../store/remote-mysql');
     }
 
     async function login(username, password) { 
         
         const data = await store.query(TABLA, { username: username });
-       
+        const Data = data[0];
+      
+      
         // recibe pass plano lo compara con pass cryptado por funcion hash de la misma libreria  - video 10 
-        return bcrypt.compare(password, data.password)
+        return bcrypt.compare(password, Data.password)
         .then(sonIguales => {
             if (sonIguales === true) {
                 // Generar token; - no es recomendable mandar objeto de data completo - desesctructure y manda en token solo la data necesaria
-                return auth.sign({...data})
+                return auth.sign({...Data})
             } else {
-                // puede sustituir con la funcion err de utils/error.js
-                throw new Error('Informacion invalida');
+
+                throw error('Error de credencial ', 500);
             }
         });
 
@@ -37,7 +40,7 @@ module.exports = function (injectedStore) {
             id: data.id,
         }
 
-        console.log(data);
+       
 
         // mira si hay username y lo actualiza ..
         if (data.username) {
@@ -48,6 +51,8 @@ module.exports = function (injectedStore) {
             // hashear pass en lugar se guarde en plano  en db se guarde hasheado - entre 5-10 es buen numero - mas largo mas seguro mas lento 
             authData.password = await bcrypt.hash(data.password, 5);
         }
+
+        
         
         return store.upsert(TABLA, authData);
     }

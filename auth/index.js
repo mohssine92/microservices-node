@@ -19,16 +19,18 @@ function verify(token) {
 const check = {
     own: function(req, owner) {
         const decoded = decodeHeader(req);
+        console.log(decoded, owner);
        
         //owner es id del objeto user impacta actualizacion - decode.id es id viajado en token de autenticacion - con fin cada autenticacion modifica su objeto nada mas  en este caso 
         if (decoded.id !== owner) {
            
-            throw error('No puedes hacer esto', 401);
+            throw error('No puedes hacer esto -  token invalido ', 401);
         }
     },
     logged: function(req) { 
         // extraer la data del token en objeto - informacion del user autenticado el que quiere seguir 
         const decoded = decodeHeader(req);
+       
     },
 }
 

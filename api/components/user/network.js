@@ -11,12 +11,12 @@ const Controller = require('./index');
 const router = express.Router();
 
 // Routes
-router.get('/', list)
-router.post('/follow/:id', secure('follow'),follow);
-router.get('/:id/following', following);
-router.get('/:id', get);
-router.post('/', upsert);
-router.put('/', secure('update'), upsert);
+router.get('/', list)  // list all user - no debe ser asi en prod - debe ser paginada 
+router.post('/follow/:id', secure('follow'),follow); // seguidores de un JWT
+router.get('/:id/following', following);//
+router.get('/:id', get);  //  get one user per id
+router.post('/', upsert); //  create user object
+router.put('/', secure('token'), upsert);  //update user 
 
 
 // Internal functions - son funciones para comunicar con funciones del controller que nos exporta index - index su trabajo es injectarle a un controller archivo de algun db y exportar funciones del mismo controller .
@@ -30,16 +30,17 @@ function list(req, res, next) {
         // asi vamos a usar la funcion next que viene dentro de todo los --mdlrs de express-- asi los errores no tenemos que gestionarlos dentro la ruta sino que se gestionan automaticamente en el ultimo mdlrs
         // next de donde viene ? - porque router se ejecuta como mdlr en la capa de red de express . y estas funciones pertenecen al router .
     
-}
+} //ok
 
 function get(req, res, next) {
     Controller.get(req.params.id)
         .then((user) => {
-            response.success(req, res, user, 200);
+            const data = user.body[0];
+            response.success(req, res, data, 200);
         })
         .catch(next);
     
-}
+} //ok
 
 function upsert(req, res, next) {
     Controller.upsert(req.body)
@@ -47,7 +48,7 @@ function upsert(req, res, next) {
             response.success(req, res, user, 201);
         })
         .catch(next);
-}
+} // ok
 
 function follow(req, res, next) {
     // req.user.id - user es objeto rellenado en el proceso del token - obteniendo informacion del user autenticado el que quiere seguir  en este caso 

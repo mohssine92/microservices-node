@@ -10,12 +10,12 @@ module.exports = function (injectedStore) {
 
     let store = injectedStore;
     if (!store) {
-        store = require('../../../store/mysql');
+        store = require('../../../store/remote-mysql');
     }
 
     function list() {
         return store.list(TABLA);
-    }
+    } // ok
 
     function get(id) {
         return store.get(TABLA, id);
@@ -47,15 +47,20 @@ module.exports = function (injectedStore) {
             })
         }
 
+        
+        // el objeto que viaja al api de db , como usamos  metodologia generica - no mandamos password a la tabla user 
         return store.upsert(TABLA, user);
     }
 
     function follow(from, to) {
-        return store.upsert(TABLA + '_follow', {
+
+        // TODO: validar si existe registro de llave compuesta
+        return store.follow(TABLA + '_follow', {
             user_from: from,
             user_to: to,
         });
     }
+    
     async function following(user) { // user = id del user 
         const join = {}
         join[TABLA] = 'user_to'; // { user: 'user_to' } tabla : campo relacion 
