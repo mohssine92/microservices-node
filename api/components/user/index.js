@@ -14,12 +14,22 @@
 // en caso de futuro tendremos problemas con conexiones podemos Replicar el micro servicio de datos , Tener varios micro servicios de Mysql .
 // De esta forma podemos acceder a Nuestro datos atraves de un microServicio creando las funciones necesarias dentro de nuestro archivo de acceso Remoto.js
 const store = require('../../../store/remote-mysql');
+const cache = require('../../../store/cache-redis/remote-cache');
+
+// let store, cache;  // debo agregar una en variables de entorno para detectar ... como referrencia 
+// if (config.remoteDB === true) {
+//     store = require('../../../store/remote-mysql');
+//     cache = require('../../../store/remote-cache');
+// } else {
+//     store = require('../../../store/mysql');
+//     cache = require('../../../store/redis');
+// }
 
 
 const ctrl = require('./controller');
 
 // ctrl : es objeto --> strl() : convertido en una funcion  / asi archivo de controller debe exportar funcion  - le injectamos lo que queremos injectar en este caso sera store
-module.exports = ctrl(store);
+module.exports = ctrl(store , cache);
 
 
 
