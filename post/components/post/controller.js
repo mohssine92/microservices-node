@@ -1,5 +1,5 @@
 const TABLA = 'post';
-
+const nanoid = require('nanoid');
 module.exports = function (injectedStore) {
 
     //  esta parte llamada constructor fe la funcion - injeccion del store : stor nos ofrece conexion a db y funcione de interectuar a al misma 
@@ -22,6 +22,7 @@ module.exports = function (injectedStore) {
 		return user;
 	}
 
+
 	async function upsert(data, user) {
 		const post = {
 			id: data.id,
@@ -33,8 +34,9 @@ module.exports = function (injectedStore) {
 			post.id = nanoid();
 		}
 
-		return Store.upsert(COLLECTION, post).then(() => post);
+		return store.upsert(TABLA, post);
 	}
+
 
 	async function like(post, user) {
         const like = await Store.upsert(COLLECTION + '_like', {
@@ -45,6 +47,7 @@ module.exports = function (injectedStore) {
         return like;
 	}
 
+	//
 	async function postsLiked(user) {
 		const users = await Store.query(COLLECTION + '_like', { user: user }, {post: post});
 		return users;

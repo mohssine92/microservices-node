@@ -23,13 +23,10 @@ router.get('/:table/:id',secure('token'), get); // params => :table :id
 router.get('/',secure('token'), follow); 
 
 
-
-//router.get('/:table' ,secure('token') , list); 
-
 // si usamos mismo verbo http - y usamos parametro como :table , y tenemos segmentos explicitos como /query , debe ser ejecutados antes que :table 
 // asi cuando mandamos peticiones desde clientes autorizados con segmentos explicitos van a ejecutarse antes que /:table que lo va considerar como tabla sql
 router.post('/query' , secure('token') , search);  // segmento explicito 
-router.post('/following' , secure('token'),following); 
+router.post('/following' , secure('token'),following); // segmento explicito 
 router.post('/:table', secure('token') ,insert);  // siempre el ultimo en orden si usamos segmentos explicitos 
 
 router.post('/:table', secure('token') ,insert); 

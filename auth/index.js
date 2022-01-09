@@ -19,7 +19,7 @@ function verify(token) {
 const check = {
     own: function(req, owner) {
         const decoded = decodeHeader(req);
-        console.log(decoded, owner);
+       
        
         //owner es id del objeto user impacta actualizacion - decode.id es id viajado en token de autenticacion - con fin cada autenticacion modifica su objeto nada mas  en este caso 
         if (decoded.id !== owner) {

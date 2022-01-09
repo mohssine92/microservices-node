@@ -1,10 +1,14 @@
 const auth = require('../../../auth');
 const Controller = require('./index');
 
+
 function checkAuth(action, options) {
 	async function middleware(req, res, next) {
         switch(action) {
-            case 'add':
+            case 'logged':
+                auth.check.logged(req);
+                next();
+                break;
             case 'list_own':
                 auth.check.logged(req);
                 next()

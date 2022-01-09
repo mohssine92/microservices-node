@@ -31,6 +31,16 @@ function createRemoteDB(host, port) {
     }
 
 	async function upsert(table, data) {
+
+
+        // como en tabla de post me da igual que el user tener de 0 a muchos posts asi si detecto la tabla post le mando directamente a insert 
+        if(table === 'post'){
+
+            console.log('insert');
+            return insert(table, data);   
+
+        }
+
       
         let row = []
         let Row;
