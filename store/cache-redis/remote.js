@@ -52,7 +52,7 @@ function createRemoteDB(host, port) {
                 return res.data.body; 
                 
                 
-            }else if (method === 'PUT' && body instanceof Object ){
+            }else if (method === 'PUT' && body instanceof Object ){ // todavia no uso 
               
                 await axios.put(url, body , {headers: {'apiToken': `${apiToken}`}});
                 return 'Updated'; 

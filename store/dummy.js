@@ -52,3 +52,6 @@ module.exports = {
 // Aislar el código de la base de datos  4/29 - conforme vayamaos teniendo diferentes dbs vayamos guardandolos en store
 // aqui tenemos archivo de config de db , en caso de cambiar db , cambiamos este archivo y punto 
 // este archivo sera renderizado derictamente desde controladores  .
+
+// Relacion de tablas de parquing
+//https://www.tutorialesprogramacionya.com/mysqlya/temarios/descripcion.php?cod=38

@@ -11,6 +11,8 @@ const client = redis.createClient({
     password: config.redis.password,
 });
 
+
+//-----------Metodos redis
 function list(table) {
 
 

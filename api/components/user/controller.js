@@ -1,5 +1,6 @@
 // para generar ids
 const nanoid = require('nanoid');
+const chalk = require('chalk')
 
 // simplemente traemos index y el index va definir cual es almacenamiento de produccion db - store - y el resto sera automatico 
 const auth = require('../auth');
@@ -18,17 +19,18 @@ module.exports = function (injectedStore,injectedCache) {
     }
 
     async function list() {
-        // Strategia de cache : Decidir primero se esta en cacheo sino ejecutamos la funcion paraque se venga desde la db Mysql en este caso etc ...
+        // Strategia de cache : Decidir primero se esta en cacheo sino ejecutamos la funcion paraque se Trae desde la db Mysql en este caso etc ...
         let users = await cache.list(TABLA);
 
         if (!users) {
-            console.log('No estaba en caché. Buscado en DB')
            
+            console.log(`${chalk.bgGreen('No estaba en caché. Buscado en DB')}` );
             users = await store.list(TABLA);
             await cache.upsert(TABLA, users);
            
         } else {
-            console.log('Nos traemos datos de cache');
+           
+            console.log(`${chalk.bgRed('Nos traemos datos de cache')}` );
         }
         return users;
 

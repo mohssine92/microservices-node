@@ -34,3 +34,8 @@ pm2 logs 0 : ver solos los logs de un proceso por su id en este caso id=0
  pm2 stop 0  : o uno por uno 
 ------ reiniciar
 pm2 restart 3
+
+
+------------Creacion de llave ssh ----------------------
+ssh % ssh-keygen -t rsa -C "mohcineikkou@gmail.com - deploy"
+respuesta : deploy digamos quiero guardar aqui , -t es tipo de llave es rsa 

@@ -22,8 +22,8 @@ module.exports = {
     apiToken :process.env.API_TOKEN || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6ImFwaSIsImlhdCI6MTUxNjIzOTAyMn0.yx83Eg8ZzjmDQ4TBYxga4TNtMTmiu9op0eIrOUcLMD4',
     sercret : process.env.SECRETORPRIVATEKEY || 'secrets',
     cacheService: {
-        host: process.env.MYSQL_SRV_HOST || 'localhost',
-        port: process.env.MYSQL_SRV_PORT || 3003,
+        host: process.env.REDIS_SRV_HOST || 'localhost',
+        port: process.env.REDIS_SRV_PORT || 3003,
     },
     redis: {
         host: process.env.REDIS_HOST || 'redis-13998.c228.us-central1-1.gce.cloud.redislabs.com',

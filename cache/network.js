@@ -3,11 +3,13 @@ const express = require('express');
 const response = require('../network/response');
 const Store = require('../store/cache-redis/redis');
 
+const secure = require('./secure');
+
 const router = express.Router();
 
-router.get('/:table', list);
-router.get('/:table/:id', get);
-router.post('/:table', upsert); // TODO: debo implementar token
+router.get('/:table',secure('token'),list);
+router.get('/:table/:id', secure('token'), get);
+router.post('/:table', secure('token'),upsert); 
 
 async function list(req, res, next) {
     const datos = await Store.list(req.params.table)
