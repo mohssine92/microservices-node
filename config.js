@@ -2,6 +2,9 @@ module.exports = {
     api: {
         port: process.env.API_PORT || 3000,
     },
+    socket: {
+        port: process.env.SOCKET_PORT || 3004,
+    },
     post: { 
         port: process.env.POST_PORT || 3002,
     },

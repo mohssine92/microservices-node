@@ -19,6 +19,7 @@
     "nanoid": "^2.1.7",
     "redis": "^2.8.0",
     "request": "^2.88.2",
+    "socket.io": "^4.4.1",
     "swagger-ui-express": "^4.3.0"
   }
 }
