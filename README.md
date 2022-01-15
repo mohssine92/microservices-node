@@ -65,4 +65,10 @@ ssh root@143.110.159.166 -i ssh/deploy    : connect to virtual machine nube
     sudo npm install -g pm2 
 
 
+-------------Git comand -----------------------------
+ git tag -a v0.0.3 -m "Socket Server basico" 
+ git push --tags 
 
+
+
+-----------------------------------------------------------

@@ -21,11 +21,16 @@
             console.log('Perdimos comunicación con el servidor');
         });
 
+        // pude mandar bol , o string , usualmente se manda objeto : asi mandamos una gran cantidad  de informacion 
+        socket.emit('mensaje', { nombre: 'Fernando', message : 'Hola Mundo ' } );
 
-        socket.emit('mensaje', { nombre: 'Fernando' } );
-
-        socket.on('mensaje', function( payload ){
+        socket.on('emitir-mensaje', function( payload ){
             console.log('Escuhando:', payload );
+        });
+
+        socket.on('active-bands', function( bands ){
+            console.clear();
+            console.table( bands );
         });
 
 
