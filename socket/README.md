@@ -1,0 +1,1 @@
+Componenets constan de api y socket events 

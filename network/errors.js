@@ -2,7 +2,7 @@ const response = require('./response');
 const chalk = require('chalk')
 
 function errors(err, req, res, next) {
-    
+  
      console.error(`${chalk.red('[error]:')}`, err);
    
     //console.log(`${chalk.red('[error]:')}`)

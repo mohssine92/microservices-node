@@ -4,6 +4,7 @@ module.exports = {
     },
     socket: {
         port: process.env.SOCKET_PORT || 3004,
+        JWT: process.env.JWT_KEY || 'dsafrg' 
     },
     post: { 
         port: process.env.POST_PORT || 3002,
@@ -32,6 +33,9 @@ module.exports = {
         host: process.env.REDIS_HOST || 'redis-13998.c228.us-central1-1.gce.cloud.redislabs.com',
         port: process.env.REDIS_PORT || 13998,
         password: process.env.REDIS_PASS || '6QWjcj3SS1wdjb4UToEcqgFsnRjltjuj',
+    },
+    mongodb: {
+        db_cnn: process.env.DB_CNN || 'mongodb+srv://chat_user:uypT253uJKkbhzyW@cluster0.kovqf.mongodb.net/chat'
     }
 
 }

@@ -68,6 +68,7 @@ ssh root@143.110.159.166 -i ssh/deploy    : connect to virtual machine nube
 -------------Git comand -----------------------------
  git tag -a v0.0.3 -m "Socket Server basico" 
  git push --tags 
+ git remote -v : ver repo remoto 
 
 
 
