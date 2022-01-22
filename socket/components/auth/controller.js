@@ -21,16 +21,13 @@ module.exports = function (injectedStore) {
 
     const CrearUsuario = async (req) => {  
 
-        const { email, password } = req.body;
-
-       
-        try {
+           const { email, password } = req.body;
 
             // Rmail es unico -  buenref para verificar si existe en db 
             const existeEmail = await User.findOne({ email })
             if( existeEmail ) {
              
-               return 'Este correo ya Existe en la base de datos'
+               throw error('Este correo ya Existe en la base de datos',400)
             }
 
             // Instancia modelos Mongoose - campos del body exta seran ignorados por model de mongoose
@@ -54,12 +51,7 @@ module.exports = function (injectedStore) {
                 token
             }
 
-        } catch (err) {
-         
-          console.error(`${chalk.cyan('[Controller-error]:')}`, err)
-          throw error('Hable con el administrador',500)
-            
-        }
+       
 
      
     }
@@ -67,36 +59,27 @@ module.exports = function (injectedStore) {
     // para hacer cualquier insertacion  o actualizacion de ususario 
     const logear = async (req) =>  {
         
-        const { email, password } = req.body;
+          const { email, password } = req.body;
 
-        try {
-            
             const usuarioDB = await User.findOne({ email });
             if ( !usuarioDB ) {
-                return 'Email no encontrado'
-               
+                throw error('Email no encontrado',404)
             }
     
             // Validar el password
             const validPassword = bcrypt.compareSync( password, usuarioDB.password );
             if ( !validPassword ) { 
-                return 'La contraseña no es valida'
+                throw error('La contraseña no es valida',400) 
             }
     
             // Generar el JWT
             const token = await generarJWT( usuarioDB.id );
             
-
             return {
                 usuario: usuarioDB,
                 token
-            }
-    
-    
-        } catch (err) {
-            console.error(`${chalk.cyan('[Controller-error]:')}`, err)
-            throw error('Hable con el administrador',500)
-        }
+            }      
+       
     }
 
     const renewToken = async (req) => {
@@ -114,13 +97,13 @@ module.exports = function (injectedStore) {
 
     }
 
+
     return {
         CrearUsuario,
         logear,
         renewToken
     };
-
-    
+ 
 };
 
 

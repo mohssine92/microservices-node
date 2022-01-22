@@ -35,7 +35,16 @@ router.get('/renew', validarJWT, renewToken);
 function login(req, res, next) {
     Controller.logear(req)
         .then((lista) => {
-            response.success(req, res, lista, 200);
+            // Forma 1 de responder
+            //response.success(req, res, lista, 200);
+
+            // Forma 2 de responder - compatible curso de fluter avanzado seccion10
+            const { usuario , token } = lista 
+            res.json({
+                ok: true,
+                usuario,
+                token
+            });
         })
         .catch(next);
 }
@@ -52,7 +61,13 @@ function crearUsuario(req, res, next) {
 function renewToken(req, res, next) {
     Controller.renewToken(req)
         .then((user) => {
-            response.success(req, res, user, 200);
+            //response.success(req, res, user, 200);
+            const { usuario , token } = user 
+            res.json({
+                ok: true,
+                usuario,
+                token
+            });
         })
         .catch(next);     
 } 

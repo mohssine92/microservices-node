@@ -4,7 +4,7 @@ module.exports = {
     },
     socket: {
         port: process.env.SOCKET_PORT || 3004,
-        JWT: process.env.JWT_KEY || 'dsafrg' 
+        JWT: process.env.JWT_KEY || 'haJSHdjksh!!1i27@askjdhm2nasa21' 
     },
     post: { 
         port: process.env.POST_PORT || 3002,

@@ -19,12 +19,19 @@ const server = require('http').createServer(app);
 module.exports.io = require('socket.io')(server);
 
 
+
+
 // Events 
-require('./components/band/events');
-require('./components/chat/events');
-require('./components/auth/events');
+//require('./components/band/events');
+//require('./components/chat/events');
+require('./events');
+
+
 // Routers
 const auth = require('./components/auth/network');
+const users = require('./components/users/network');
+const chat = require('./components/chat/network');
+
 
 
 const publicPath = path.resolve( __dirname, 'public' );
@@ -35,6 +42,9 @@ const publicPath = path.resolve( __dirname, 'public' );
 // Servido en / : logramos servir directorio publico cons sus archivos html , js etc .. :como app html - en la ruta estatica  
 app.use( express.static( publicPath ) );
 app.use('/api/login', auth );
+app.use('/api/usuarios', users );
+app.use('/api/mensajes', chat );
+
 app.use(errors);
 
 

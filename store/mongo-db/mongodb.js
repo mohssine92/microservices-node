@@ -30,8 +30,10 @@ dbConnection();
 //---------------------Models Mongoose---------------------------------------------//
 
 const User = require('./models/usuario');
+const Mensaje = require('./models/mensaje')
 
 // Exportarlos a Controllers com objetos de monggose
 module.exports = {
-    User
+    User,
+    Mensaje
 };
